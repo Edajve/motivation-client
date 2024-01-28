@@ -1,25 +1,40 @@
-import { ReactNode, useEffect, useState } from 'react';
-import getPhoto from '../hooks/getRandomPhoto';
+import { useState } from 'react';
+import YearProgress from './YearProgress';
 
 interface BackgroundProps {
-    children: ReactNode;
+    children: JSX.Element;
 }
 
-function Background({ children }: BackgroundProps) {
-    const [photo, setPhoto] = useState("")
+const Background = ({ }: BackgroundProps) => {
+    const [backgroundColor, setBackgroundColor] = useState<String>('rgba(0, 0, 0, 0.5)');
+    const [backgroundImage, setBackgroundImage] = useState<String>('https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg');
 
-    useEffect(() => {
-        // set new photo when its a new day
-        // var x = getPhoto()
-        // console.log(x)
-      }, [photo]);
+    const updateStyles = () => {
+        setBackgroundColor('new-color-value');
+        setBackgroundImage('new-image-url');
+    };
 
     return (
-        <div style={{ backgroundColor: 'green', opacity: '0.5', height: '100vh' }}>
-            console.log(x)
-            {children}
+        <div
+            id="root"
+            style={{
+                position: 'relative',
+                height: '100vh',
+                width: '100vw',
+                background: `linear-gradient(${backgroundColor}, ${backgroundColor}), url(${backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 0
+            }}
+        >
+
+            <YearProgress />
         </div>
     );
-}
+};
 
 export default Background;
