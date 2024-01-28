@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite
+/dist/
+/.vite/
+
+# Editor
+.vscode/
+
+# Build output
+/out/
+
+# Dependency directories
+/jest-puppeteer/
+/puppeteer/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
