@@ -1,0 +1,16 @@
+{
+    "months": [
+      {"month": "January", "maxDays": 31},
+      {"month": "February", "maxDays": 29},
+      {"month": "March", "maxDays": 31},
+      {"month": "April", "maxDays": 30},
+      {"month": "May", "maxDays": 31},
+      {"month": "June", "maxDays": 30},
+      {"month": "July", "maxDays": 31},
+      {"month": "August", "maxDays": 31},
+      {"month": "September", "maxDays": 30},
+      {"month": "October", "maxDays": 31},
+      {"month": "November", "maxDays": 30},
+      {"month": "December", "maxDays": 31}
+    ]
+}  
