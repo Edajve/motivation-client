@@ -25,7 +25,7 @@ function Quote() {
             textAlign='center'
             flexDir='column'>
             <Box>
-                <Text fontSize='2rem' pb='1rem'>"{quote}"</Text>
+                <Text fontStyle='italic' fontSize='2rem' pb='1rem'>"{quote}"</Text>
             </Box>
             <Divider />
             <Box>
