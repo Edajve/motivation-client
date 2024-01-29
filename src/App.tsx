@@ -21,16 +21,7 @@ function App() {
           <Weather />
         </GridItem>
         <GridItem colSpan={4}>
-          <Flex
-            id='yearProgressBox'
-            w="40rem"
-            h='15rem'
-            justifyContent="space-between"
-            p={4}>
-            <Box w='6rem' >
-              <YearProgress />
-            </Box>
-          </Flex>
+          <YearProgress />
         </GridItem >
       </Grid>
     </>

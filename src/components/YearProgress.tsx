@@ -12,6 +12,7 @@ import {
     DrawerCloseButton,
     useDisclosure,
     Textarea,
+    Flex,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import yearJson from '../data/yearJson.json'
@@ -50,45 +51,56 @@ function YearProgress() {
     }
 
     return (
-        <Box id='YearProgress'
-            mt='120px'
-            w='30rem'>
-            <Text>Till 2024</Text>
-            <Progress
-                value={parseInt(yearPercentage)}
-                size='lg'
-                colorScheme='green'
-                rounded="md"
-                backgroundColor="black" />
-            <Text id='progress-percentage-test' fontSize='2rem' pb={5}>{yearPercentage}%</Text>
-            <Button
-                top='30%'
-                colorScheme='gray'
-                variant='outline'
-                color='gray'
-                onClick={onOpen}>
-                Add Note
-            </Button>
-            <Drawer
-                isOpen={isOpen}
-                placement='right'
-                onClose={onClose}>
-                <DrawerOverlay />
-                <DrawerContent>
-                    <DrawerCloseButton />
-                    <DrawerHeader>Add a note for the end of the year</DrawerHeader>
-                    <DrawerBody>
-                        <Textarea placeholder='Type here...' />
-                    </DrawerBody>
-                    <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme='blue'>Save</Button>
-                    </DrawerFooter>
-                </DrawerContent>
-            </Drawer>
-        </Box>
+
+        <Flex
+            id='yearProgressBox'
+            w="40rem"
+            h='15rem'
+            justifyContent="space-between"
+            p={4}>
+            <Box w='6rem' >
+                <Box id='YearProgress'
+                    mt='120px'
+                    w='30rem'>
+                    <Text>Till 2024</Text>
+                    <Progress
+                        value={parseInt(yearPercentage)}
+                        size='lg'
+                        colorScheme='green'
+                        rounded="md"
+                        backgroundColor="black" />
+                    <Text id='progress-percentage-test' fontSize='2rem' pb={5}>{yearPercentage}%</Text>
+                    <Button
+                        top='30%'
+                        colorScheme='gray'
+                        variant='outline'
+                        color='gray'
+                        onClick={onOpen}>
+                        Add Note
+                    </Button>
+                    {/* Opens a side drawer on the right side */}
+                    <Drawer
+                        isOpen={isOpen}
+                        placement='right'
+                        onClose={onClose}>
+                        <DrawerOverlay />
+                        <DrawerContent>
+                            <DrawerCloseButton />
+                            <DrawerHeader>Add a note for the end of the year</DrawerHeader>
+                            <DrawerBody>
+                                <Textarea placeholder='Type here...' />
+                            </DrawerBody>
+                            <DrawerFooter>
+                                <Button variant='outline' mr={3} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button colorScheme='blue'>Save</Button>
+                            </DrawerFooter>
+                        </DrawerContent>
+                    </Drawer>
+                </Box>
+            </Box>
+        </Flex>
     )
 }
 
