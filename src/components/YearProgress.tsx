@@ -43,7 +43,7 @@ function YearProgress() {
                 rounded="md"
                 backgroundColor="black"
             />
-            <Text>{yearPercentage}%</Text>
+            <Text id='progress-percentage-test'>{yearPercentage}%</Text>
         </div>
     )
 }
