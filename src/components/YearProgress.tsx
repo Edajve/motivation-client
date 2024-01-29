@@ -1,4 +1,4 @@
-import { Progress, Text } from '@chakra-ui/react'
+import { Box, Progress, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import yearJson from '../data/yearJson.json'
 
@@ -35,7 +35,10 @@ function YearProgress() {
     }
 
     return (
-        <div id='YearProgress'>
+        <Box id='YearProgress'
+            mt='30px'
+            w='30rem'>
+            <Text>Till 2024</Text>
             <Progress
                 value={parseInt(yearPercentage)}
                 size='lg'
@@ -43,8 +46,8 @@ function YearProgress() {
                 rounded="md"
                 backgroundColor="black"
             />
-            <Text id='progress-percentage-test'>{yearPercentage}%</Text>
-        </div>
+            <Text id='progress-percentage-test' fontSize='2rem'>{yearPercentage}%</Text>
+        </Box>
     )
 }
 

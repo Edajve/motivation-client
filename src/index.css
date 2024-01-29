@@ -1,18 +1,4 @@
-#YearProgress {
-    width: 500px;
-    margin-left: 70%;
-}
 
-#progress-percentage-test {
-    font-size: 2rem;
-}
-
-#quoteBox {
-    width: 400rem;
-    height: 20rem;
-    background-color: orange;
-
-}
 
 #root {
     position: relative;
