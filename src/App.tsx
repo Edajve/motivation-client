@@ -1,13 +1,11 @@
+import { Box } from '@chakra-ui/react';
 import './App.css';
-import Background from './components/Background';
 import YearProgress from './components/YearProgress';
 
 function App() {
   return (
     <>
-      <Background>
-        <YearProgress />
-      </Background>
+      <YearProgress />
     </>
   )
 }

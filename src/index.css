@@ -6,3 +6,24 @@
 #progress-percentage-test {
     font-size: 2rem;
 }
+
+#quoteBox {
+    width: 400rem;
+    height: 20rem;
+    background-color: orange;
+
+}
+
+#root {
+    position: relative;
+    height: 150vh;
+    width: 100vw;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1704072384017-788b1ccbaae5?crop=entropy\u0026cs=srgb\u0026fm=jpg\u0026ixid=M3w1NTk3ODl8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDY0ODkyMTV8\u0026ixlib=rb-4.0.3\u0026q=85');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
