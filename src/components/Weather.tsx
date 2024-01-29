@@ -31,8 +31,11 @@ function Weather() {
 
     return (
         <Flex pt={4} color='white'>
-            <Center w='100px' width={40}>
-                <Text>Icon</Text>
+            <Center
+                backgroundImage={weather?.icon}
+                w='100px'
+                width={40}
+                backgroundSize="cover">
             </Center>
             <Square size='150px'>
                 <Text fontSize="xxx-large">{weather?.farenheight}˚</Text>
@@ -40,7 +43,7 @@ function Weather() {
             <Flex flex='1' flexDir='row' justifyContent='space-between'>
                 <Box pl={2} >
                     <Text fontWeight="bold" >Description</Text>
-                     <Text>{weather?.description}</Text>
+                    <Text>{weather?.description}</Text>
                 </Box>
                 <Box>
                     <Text fontWeight="bold" >Location</Text>
