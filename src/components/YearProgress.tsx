@@ -51,7 +51,7 @@ function YearProgress() {
 
     return (
         <Box id='YearProgress'
-            mt='30px'
+            mt='120px'
             w='30rem'>
             <Text>Till 2024</Text>
             <Progress
@@ -59,9 +59,7 @@ function YearProgress() {
                 size='lg'
                 colorScheme='green'
                 rounded="md"
-                backgroundColor="black"
-            />
-
+                backgroundColor="black" />
             <Text id='progress-percentage-test' fontSize='2rem' pb={5}>{yearPercentage}%</Text>
             <Button
                 top='30%'
@@ -71,21 +69,17 @@ function YearProgress() {
                 onClick={onOpen}>
                 Add Note
             </Button>
-
             <Drawer
                 isOpen={isOpen}
                 placement='right'
-                onClose={onClose}
-            >
+                onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
                     <DrawerHeader>Add a note for the end of the year</DrawerHeader>
-
                     <DrawerBody>
                         <Textarea placeholder='Type here...' />
                     </DrawerBody>
-
                     <DrawerFooter>
                         <Button variant='outline' mr={3} onClick={onClose}>
                             Cancel
