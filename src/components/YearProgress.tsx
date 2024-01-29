@@ -11,7 +11,6 @@ import {
     DrawerContent,
     DrawerCloseButton,
     useDisclosure,
-    Input,
     Textarea,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
@@ -19,7 +18,6 @@ import yearJson from '../data/yearJson.json'
 
 function YearProgress() {
     const [yearPercentage, setYearPercentage] = useState(String)
-    const [showInput, setShowInput] = useState<boolean>(false)
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
@@ -49,10 +47,6 @@ function YearProgress() {
             totalCurrentDays + date.getDate()
         }
         return totalCurrentDays
-    }
-
-    const handleClick = (): void => {
-        setShowInput(!showInput)
     }
 
     return (
