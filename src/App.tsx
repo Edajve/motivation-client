@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import './App.css';
 import YearProgress from './components/YearProgress';
 
@@ -18,12 +18,11 @@ function App() {
           <Flex
             id='yearProgressBox'
             w="40rem"
-            h='10rem'
+            h='15rem'
             justifyContent="space-between"
             p={4}>
-            <YearProgress />
             <Box w='6rem' >
-              <Button top='30%' colorScheme='white' variant='outline'> Add Note </Button>
+              <YearProgress />
             </Box>
           </Flex>
         </GridItem >

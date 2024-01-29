@@ -1,9 +1,26 @@
-import { Box, Progress, Text } from '@chakra-ui/react'
+import {
+    Box,
+    Button,
+    Progress,
+    Text,
+    Drawer,
+    DrawerBody,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+    useDisclosure,
+    Input,
+    Textarea,
+} from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import yearJson from '../data/yearJson.json'
 
 function YearProgress() {
     const [yearPercentage, setYearPercentage] = useState(String)
+    const [showInput, setShowInput] = useState<boolean>(false)
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
         setYearPercentage(calculateYearlyPercent())
@@ -34,6 +51,10 @@ function YearProgress() {
         return totalCurrentDays
     }
 
+    const handleClick = (): void => {
+        setShowInput(!showInput)
+    }
+
     return (
         <Box id='YearProgress'
             mt='30px'
@@ -46,7 +67,39 @@ function YearProgress() {
                 rounded="md"
                 backgroundColor="black"
             />
-            <Text id='progress-percentage-test' fontSize='2rem'>{yearPercentage}%</Text>
+
+            <Text id='progress-percentage-test' fontSize='2rem' pb={5}>{yearPercentage}%</Text>
+            <Button
+                top='30%'
+                colorScheme='gray'
+                variant='outline'
+                color='gray'
+                onClick={onOpen}>
+                Add Note
+            </Button>
+
+            <Drawer
+                isOpen={isOpen}
+                placement='right'
+                onClose={onClose}
+            >
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerHeader>Add a note for the end of the year</DrawerHeader>
+
+                    <DrawerBody>
+                        <Textarea placeholder='Type here...' />
+                    </DrawerBody>
+
+                    <DrawerFooter>
+                        <Button variant='outline' mr={3} onClick={onClose}>
+                            Cancel
+                        </Button>
+                        <Button colorScheme='blue'>Save</Button>
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
         </Box>
     )
 }
