@@ -2,6 +2,7 @@ import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import './App.css';
 import YearProgress from './components/YearProgress';
 import Quote from './components/Quote';
+import Weather from './components/Weather';
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
         <GridItem fontStyle='italic' colSpan={2} opacity={1} p={5} pt='4rem'>
           <Quote />
         </GridItem>
-        <GridItem colSpan={2} bg='papayawhip' opacity={0.2} />
+        <GridItem colSpan={2} bg='papayawhip' >
+          <Weather />
+        </GridItem>
         <GridItem colSpan={4}>
           <Flex
             id='yearProgressBox'
