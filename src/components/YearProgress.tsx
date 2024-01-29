@@ -2,7 +2,6 @@ import { Progress, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import yearJson from '../data/yearJson.json'
 
-
 function YearProgress() {
     const [yearPercentage, setYearPercentage] = useState(String)
 
