@@ -17,7 +17,7 @@ function App() {
         <GridItem fontStyle='italic' colSpan={2} opacity={1} p={5} pt='4rem'>
           <Quote />
         </GridItem>
-        <GridItem colSpan={2} bg='papayawhip' >
+        <GridItem colSpan={2}>
           <Weather />
         </GridItem>
         <GridItem colSpan={4}>
