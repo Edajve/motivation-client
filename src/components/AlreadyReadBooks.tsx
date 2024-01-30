@@ -1,4 +1,5 @@
-import { Box, StackDivider, VStack, Text } from "@chakra-ui/react";
+import { Box, StackDivider, VStack, Text, Flex } from "@chakra-ui/react";
+import { DeleteIcon } from '@chakra-ui/icons'
 
 const AlreadyReadBooks = () => {
     // call a get all api and map over the elements as jsx
@@ -16,6 +17,11 @@ const AlreadyReadBooks = () => {
             color: 'black'
         }
     }
+
+    const cursorPointer = {
+        cursor: 'pointer'
+    }
+
     // this needs to be mapped over when getting api response
     return (
         <>
@@ -23,24 +29,39 @@ const AlreadyReadBooks = () => {
                 divider={<StackDivider borderColor='gray.200' />}
                 spacing={1}
                 align='stretch'>
-                <Box {...boxStyles} {...hoverStyles}>
-                    <Text fontSize='sm'>Haruki Murakami</Text>
+                <Flex {...boxStyles} {...hoverStyles}>
+                    <Box className="bookInformationDiv">
+                        <Text fontSize='sm'>Haruki Murakami</Text>
                     <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
                         consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>
-                </Box>
-                <Box {...boxStyles} {...hoverStyles}>
-                    <Text fontSize='sm'>Haruki Murakami</Text>
+                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>    
+                    </Box>
+                    <Box pt={4} className="deleteIcon" {...cursorPointer}>
+                        <DeleteIcon />
+                    </Box>
+                </Flex>
+                <Flex {...boxStyles} {...hoverStyles}>
+                    <Box className="bookInformationDiv">
+                        <Text fontSize='sm'>Haruki Murakami</Text>
                     <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
                         consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>
-                </Box>
-                <Box {...boxStyles} p={2} {...hoverStyles}>
-                    <Text fontSize='sm'>Haruki Murakami</Text>
+                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>    
+                    </Box>
+                    <Box pt={4} className="deleteIcon" {...cursorPointer}>
+                        <DeleteIcon />
+                    </Box>
+                </Flex>
+                <Flex {...boxStyles} p={2} {...hoverStyles}>
+                    <Box className="bookInformationDiv">
+                        <Text fontSize='sm'>Haruki Murakami</Text>
                     <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
                         consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>
-                </Box>
+                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>    
+                    </Box>
+                    <Box pt={4} className="deleteIcon" {...cursorPointer}>
+                        <DeleteIcon />
+                    </Box>
+                </Flex>
             </VStack>
         </>
     )
