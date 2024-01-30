@@ -29,6 +29,10 @@ function Weather() {
             .catch((err) => { if (err) throw err })
     }, [])
 
+    const boxStyles = {
+        pt: '50px'
+    }
+
     return (
         <Flex pt={4} color='white'>
             <Center
@@ -41,19 +45,19 @@ function Weather() {
                 <Text fontSize="xxx-large">{weather?.farenheight}˚</Text>
             </Square>
             <Flex flex='1' flexDir='row' justifyContent='space-between'>
-                <Box pl={2} >
+                <Box pl={2}  {...boxStyles}>
                     <Text fontWeight="bold" >Description</Text>
                     <Text>{weather?.description}</Text>
                 </Box>
-                <Box>
+                <Box {...boxStyles}>
                     <Text fontWeight="bold" >Location</Text>
                     <Text>{weather?.location}</Text>
                 </Box>
-                <Box>
+                <Box {...boxStyles}>
                     <Text fontWeight="bold" >Humidity</Text>
                     <Text>{weather?.humidity}</Text>
                 </Box>
-                <Box pr={2}>
+                <Box pr={2} {...boxStyles}>
                     <Text fontWeight="bold" >Wind Speed</Text>
                     <Text>{weather?.windSpeed}</Text>
                 </Box>
