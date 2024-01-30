@@ -1,25 +1,15 @@
 import {
     Box,
-    Button,
     Progress,
     Text,
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    useDisclosure,
-    Textarea,
-    Flex,
+    Flex
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import yearJson from '../data/yearJson.json'
+import AddNote from './AddNoteButton'
 
 function YearProgress() {
     const [yearPercentage, setYearPercentage] = useState(String)
-    const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
         setYearPercentage(calculateYearlyPercent())
@@ -70,33 +60,7 @@ function YearProgress() {
                         rounded="md"
                         backgroundColor="black" />
                     <Text id='progress-percentage-test' fontSize='2rem' pb={5}>{yearPercentage}%</Text>
-                    <Button
-                        top='30%'
-                        variant='outline'
-                        color='hsl(341, 100%, 93%)'
-                        onClick={onOpen}>
-                        Add Note
-                    </Button>
-                    {/* Opens a side drawer on the right side */}
-                    <Drawer
-                        isOpen={isOpen}
-                        placement='right'
-                        onClose={onClose}>
-                        <DrawerOverlay />
-                        <DrawerContent>
-                            <DrawerCloseButton />
-                            <DrawerHeader>Add a note for the end of the year</DrawerHeader>
-                            <DrawerBody>
-                                <Textarea placeholder='Type here...' />
-                            </DrawerBody>
-                            <DrawerFooter>
-                                <Button variant='outline' mr={3} onClick={onClose}>
-                                    Cancel
-                                </Button>
-                                <Button colorScheme='blue'>Save</Button>
-                            </DrawerFooter>
-                        </DrawerContent>
-                    </Drawer>
+                    <AddNote />
                 </Box>
             </Box>
         </Flex>
