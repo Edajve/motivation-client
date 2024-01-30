@@ -33,7 +33,7 @@ const SubmitBookReviewButton = () => {
                 onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Create your account</ModalHeader>
+                    <ModalHeader>Submit Your Current Book</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <FormControl mt={3}>
