@@ -1,4 +1,17 @@
-import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, ModalFooter } from "@chakra-ui/react";
+import {
+    useDisclosure,
+    Button,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalCloseButton,
+    ModalBody,
+    FormControl,
+    FormLabel,
+    Input,
+    ModalFooter
+} from "@chakra-ui/react";
 import React from "react";
 
 const EditBookButton = () => {
@@ -48,9 +61,7 @@ const EditBookButton = () => {
                         </FormControl>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onSaveEdit}>
-                            Save
-                        </Button>
+                        <Button colorScheme='blue' mr={3} onClick={onSaveEdit}>Save</Button>
                         <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                 </ModalContent>

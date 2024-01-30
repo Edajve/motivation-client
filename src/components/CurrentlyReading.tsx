@@ -2,13 +2,10 @@ import {
     Box,
     Spacer,
     Text,
-    Button,
-    Divider,
-    AlertIcon,
-    Alert,
-    Stack,
+    Divider
 } from "@chakra-ui/react"
 import EditBookButton from "./EditBookButton";
+import SubmitBookReviewButton from "./SubmitBookReviewButton";
 
 const CurrentlyReading = () => {
     return (
@@ -29,7 +26,7 @@ const CurrentlyReading = () => {
                 <Spacer h={4} />
                 <Divider />
                 <EditBookButton />
-                <Button >Submit Book Review</Button>
+                <SubmitBookReviewButton />
             </Box>
         </>
     )
