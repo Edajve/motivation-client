@@ -1,6 +1,7 @@
 import { Box, GridItem } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import CurrentlyReading from "./CurrentlyReading";
+import AlreadyReadBooks from "./AlreadyReadBooks";
 
 const BookTracker = () => {
     return (
@@ -24,7 +25,7 @@ const BookTracker = () => {
                             <CurrentlyReading />
                         </TabPanel>
                         <TabPanel>
-                            <p>two!</p>
+                            <AlreadyReadBooks />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
