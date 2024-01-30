@@ -72,9 +72,8 @@ function YearProgress() {
                     <Text id='progress-percentage-test' fontSize='2rem' pb={5}>{yearPercentage}%</Text>
                     <Button
                         top='30%'
-                        colorScheme='gray'
                         variant='outline'
-                        color='gray'
+                        color='hsl(341, 100%, 93%)'
                         onClick={onOpen}>
                         Add Note
                     </Button>
