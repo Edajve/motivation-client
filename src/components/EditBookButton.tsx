@@ -13,7 +13,7 @@ const EditBookButton = () => {
 
     return (
         <>
-            <Button mt={3} mb={5} onClick={onOpen}>Update Book</Button>
+            <Button mt={6} mb={6} onClick={onOpen}>Update Book</Button>
             <Modal
                 initialFocusRef={initialRef}
                 isOpen={isOpen}
