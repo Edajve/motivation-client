@@ -1,5 +1,5 @@
 import { Box, StackDivider, VStack, Text, Flex } from "@chakra-ui/react";
-import { DeleteIcon } from '@chakra-ui/icons'
+import DeleteABookButton from "./DeleteABookButton";
 
 const AlreadyReadBooks = () => {
     // call a get all api and map over the elements as jsx
@@ -8,6 +8,7 @@ const AlreadyReadBooks = () => {
         p: 2,
         h: '70px',
         overflow: 'auto',
+        borderRadius: '6px'
     };
 
     const hoverStyles = {
@@ -32,34 +33,34 @@ const AlreadyReadBooks = () => {
                 <Flex {...boxStyles} {...hoverStyles}>
                     <Box className="bookInformationDiv">
                         <Text fontSize='sm'>Haruki Murakami</Text>
-                    <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>    
+                        <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>
                     </Box>
                     <Box pt={4} className="deleteIcon" {...cursorPointer}>
-                        <DeleteIcon />
+                        <DeleteABookButton />
                     </Box>
                 </Flex>
                 <Flex {...boxStyles} {...hoverStyles}>
                     <Box className="bookInformationDiv">
                         <Text fontSize='sm'>Haruki Murakami</Text>
-                    <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>    
+                        <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>
                     </Box>
                     <Box pt={4} className="deleteIcon" {...cursorPointer}>
-                        <DeleteIcon />
+                        <DeleteABookButton />
                     </Box>
                 </Flex>
                 <Flex {...boxStyles} p={2} {...hoverStyles}>
                     <Box className="bookInformationDiv">
                         <Text fontSize='sm'>Haruki Murakami</Text>
-                    <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>    
+                        <Text ml={2} fontSize='11px'>Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam </Text>
                     </Box>
                     <Box pt={4} className="deleteIcon" {...cursorPointer}>
-                        <DeleteIcon />
+                        <DeleteABookButton />
                     </Box>
                 </Flex>
             </VStack>
