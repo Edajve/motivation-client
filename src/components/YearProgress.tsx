@@ -28,9 +28,10 @@ function YearProgress() {
         var currentMonthIndex = date.getMonth()
         var previousMonthIndex = currentMonthIndex - 1
         var totalCurrentDays = 0
+        var theCurrentMonthIsJanuaryOrFebuary = previousMonthIndex <= firstMonthIndex
 
-        if (previousMonthIndex <= firstMonthIndex) {
-            totalCurrentDays = date.getDate()
+        if (theCurrentMonthIsJanuaryOrFebuary) {
+            totalCurrentDays = date.getDate() + 31 // 31 Days in January
         } else {
             yearJson.months.splice(firstMonthIndex, currentMonthIndex)
                 .map(month => totalCurrentDays += month.maxDays)
