@@ -15,30 +15,41 @@ import {
 } from "@chakra-ui/react";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import getEmotions from "../hooks/internalApiHooks/getEmotions";
+import createEmotion from "../hooks/internalApiHooks/createEmotion";
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [newEmotion, setNewEmotion] = useState<string>('')
     const [allEmotionsArray, setAllEmotionsArray] = useState<string[] | String[]>([])
     const [openAddEmotionModel, setOpenAddEmotionModel] = useState<boolean>(false)
+    const [addNewEmotionInputField, setAddNewEmotionInputField] = useState<string>("")
     const initialRef = React.useRef(null)
+    const ADD_EMOTION_TEXT = 'Click to add emotion..'
 
     useEffect(() => {
         getEmotions()
             .then(res => {
                 const emotionArray: String[] = []
                 res.data.forEach((emotion: { emotion: String; }) => emotionArray.push((emotion.emotion)))
-                setAllEmotionsArray(emotionArray)
+                var orderedArray = moveElementToEndOfTheArray(emotionArray, ADD_EMOTION_TEXT)
+                setAllEmotionsArray(orderedArray)
             })
             .catch(err => { if (err) throw err })
-    }, [])
+    }, [openAddEmotionModel])
 
     useEffect(() => {
-        let doesTheClickedEmotionDropDownMatchTextToOpenPrompt = newEmotion === 'Click to add emotion..'
+        let doesTheClickedEmotionDropDownMatchTextToOpenPrompt = newEmotion === ADD_EMOTION_TEXT
         if (doesTheClickedEmotionDropDownMatchTextToOpenPrompt) {
             setOpenAddEmotionModel(!openAddEmotionModel)
         }
     }, [newEmotion])
+
+    const moveElementToEndOfTheArray = (array: String[], elementToMove: string): String[] => {
+        const index = array.indexOf(elementToMove)
+        array.splice(index, 1) // remove 'index' from array
+        array.push(elementToMove)
+        return array
+    }
 
     const onSaveEdit = (): void => {
         // YOU STOPPED HERE, THIS IS ON THE ADD EMOTION MODEL.
@@ -49,7 +60,6 @@ const AddNote = () => {
     const onAddEmotion = (target: ChangeEvent<HTMLSelectElement>): void => {
         const emotion = target.target.value
         setNewEmotion(emotion)
-
     }
 
     const handleCloseAddEmotion = () => {
@@ -58,12 +68,12 @@ const AddNote = () => {
     }
 
     const handleAddingNewEmotion = () => {
-        console.log('send off post requet to add emotion')
+        createEmotion(addNewEmotionInputField)
         setOpenAddEmotionModel(!openAddEmotionModel)
     }
 
-    const onInputChange = (newEmotion: ChangeEvent<HTMLInputElement>): void => {
-        setNewEmotion(newEmotion.target.value)
+    const onAddNewEmotionInputField = (newEmotion: ChangeEvent<HTMLInputElement>): void => {
+        setAddNewEmotionInputField(newEmotion.target.value)
     }
 
     return (
@@ -120,7 +130,7 @@ const AddNote = () => {
                                 placeholder="Create Emotion"
                                 size="md"
                                 type="input"
-                                onChange={(target) => { onInputChange(target) }} />
+                                onChange={(target) => { onAddNewEmotionInputField(target) }} />
                         </ModalBody>
                         <ModalFooter>
                             <Button colorScheme='blue' mr={3} onClick={() => handleCloseAddEmotion()}>
