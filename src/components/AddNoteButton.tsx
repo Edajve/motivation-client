@@ -21,7 +21,6 @@ const AddNote = () => {
     const [newEmotion, setNewEmotion] = useState<string>('')
     const [allEmotionsArray, setAllEmotionsArray] = useState<string[] | String[]>([])
     const [openAddEmotionModel, setOpenAddEmotionModel] = useState<boolean>(false)
-
     const initialRef = React.useRef(null)
 
     useEffect(() => {
@@ -29,19 +28,20 @@ const AddNote = () => {
             .then(res => {
                 const emotionArray: String[] = []
                 res.data.forEach((emotion: { emotion: String; }) => emotionArray.push((emotion.emotion)))
-                // why does this call an infinite loop
                 setAllEmotionsArray(emotionArray)
             })
             .catch(err => { if (err) throw err })
     }, [])
 
     useEffect(() => {
-        if (newEmotion === 'Click to add emotion..') {
+        let doesTheClickedEmotionDropDownMatchTextToOpenPrompt = newEmotion === 'Click to add emotion..'
+        if (doesTheClickedEmotionDropDownMatchTextToOpenPrompt) {
             setOpenAddEmotionModel(!openAddEmotionModel)
         }
     }, [newEmotion])
 
     const onSaveEdit = (): void => {
+        // YOU STOPPED HERE, THIS IS ON THE ADD EMOTION MODEL.
         console.log("save note - send post request to spring backend")
         onClose()
     }
