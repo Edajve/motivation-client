@@ -16,6 +16,7 @@ import {
 import React, { ChangeEvent, useEffect, useState } from "react";
 import getEmotions from "../hooks/internalApiHooks/getEmotions";
 import createEmotion from "../hooks/internalApiHooks/createEmotion";
+import { Note } from "../hooks/internalApiHooks/createNote";
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -25,6 +26,16 @@ const AddNote = () => {
     const [addNewEmotionInputField, setAddNewEmotionInputField] = useState<string>("")
     const initialRef = React.useRef(null)
     const ADD_EMOTION_TEXT = 'Click to add emotion..'
+    const [createNoteBody, setCreateNoteBody] = useState<Note>(
+        {
+            title: "",
+            actualNote: "",
+            emotion: {
+                emotion: ""
+            },
+            dateOfNoteSubmission: " "
+        }
+    )
 
     useEffect(() => {
         getEmotions()
@@ -51,26 +62,48 @@ const AddNote = () => {
         return array
     }
 
-    const onSaveEdit = (): void => {
-        // YOU STOPPED HERE, THIS IS ON THE ADD EMOTION MODEL.
-        console.log("save note - send post request to spring backend")
+    const onAddNewNote = (): void => {
+        console.log(createNoteBody)
         onClose()
     }
 
-    const onAddEmotion = (target: ChangeEvent<HTMLSelectElement>): void => {
-        const emotion = target.target.value
-        setNewEmotion(emotion)
+    const onChangeNoteInputFields = (input: any): void => {
+        let inputText;
+        let fieldToUpdate;
+
+        switch (input.target.id) {
+            case 'note-title-input':
+                fieldToUpdate = 'title';
+                break;
+            case 'summary-title-input':
+                fieldToUpdate = 'actualNote';
+                break;
+            default:
+                return;
+        }
+
+        inputText = input.target.value;
+        const newNote = { ...createNoteBody, [fieldToUpdate]: inputText };
+        setCreateNoteBody(newNote);
+    };
+
+    // fix this here
+    const onEmotionChange = (target: ChangeEvent<HTMLSelectElement>): void => {
+        const emotionToCapture = target.target.value
+        setNewEmotion(emotionToCapture)
+        const newNote = { ...createNoteBody, emotion: { emotion: emotionToCapture } };
+        setCreateNoteBody(newNote)
     }
 
     const handleCloseAddEmotion = () => {
-        setNewEmotion('Happy')
+        setNewEmotion("")
         setOpenAddEmotionModel(false)
     }
 
     const handleAddingNewEmotion = () => {
         createEmotion(addNewEmotionInputField)
         setOpenAddEmotionModel(false)
-        setNewEmotion('Happy')
+        setNewEmotion("")
     }
 
     const onAddNewEmotionInputField = (newEmotion: ChangeEvent<HTMLInputElement>): void => {
@@ -97,16 +130,25 @@ const AddNote = () => {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Note Title</FormLabel>
-                            <Input ref={initialRef} placeholder='Title' />
+                            <Input
+                                id="note-title-input"
+                                value={createNoteBody.title}
+                                onChange={target => onChangeNoteInputFields(target)}
+                                ref={initialRef}
+                                placeholder='Title' />
                         </FormControl>
                         <FormControl mt={4}>
                             <FormLabel>Summary</FormLabel>
-                            <Input placeholder='Description' />
+                            <Input
+                                id="summary-title-input"
+                                value={createNoteBody.actualNote}
+                                onChange={target => onChangeNoteInputFields(target)}
+                                placeholder='Description' />
                         </FormControl>
                         <FormControl mt={4}>
                             <FormLabel>How Do You Feel?</FormLabel>
                             <Select placeholder='Give me and emotion..'
-                                onChange={(target) => onAddEmotion(target)}>
+                                onChange={(target) => onEmotionChange(target)}>
                                 {allEmotionsArray.map((emo, index) => (
                                     <option key={index}>{emo}</option>
                                 ))}
@@ -114,7 +156,7 @@ const AddNote = () => {
                         </FormControl>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onSaveEdit}>Save</Button>
+                        <Button colorScheme='blue' mr={3} onClick={onAddNewNote}>Save</Button>
                         <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                 </ModalContent>
