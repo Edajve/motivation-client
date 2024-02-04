@@ -19,9 +19,9 @@ import createEmotion from "../hooks/internalApiHooks/createEmotion";
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [newEmotion, setNewEmotion] = useState<string>('')
+    const [newEmotion, setNewEmotion] = useState<string>()
     const [allEmotionsArray, setAllEmotionsArray] = useState<string[] | String[]>([])
-    const [openAddEmotionModel, setOpenAddEmotionModel] = useState<boolean>(false)
+    const [openAddEmotionModel, setOpenAddEmotionModel] = useState<boolean>()
     const [addNewEmotionInputField, setAddNewEmotionInputField] = useState<string>("")
     const initialRef = React.useRef(null)
     const ADD_EMOTION_TEXT = 'Click to add emotion..'
@@ -35,12 +35,12 @@ const AddNote = () => {
                 setAllEmotionsArray(orderedArray)
             })
             .catch(err => { if (err) throw err })
-    }, [openAddEmotionModel])
+    }, [openAddEmotionModel, newEmotion])
 
     useEffect(() => {
         let doesTheClickedEmotionDropDownMatchTextToOpenPrompt = newEmotion === ADD_EMOTION_TEXT
         if (doesTheClickedEmotionDropDownMatchTextToOpenPrompt) {
-            setOpenAddEmotionModel(!openAddEmotionModel)
+            setOpenAddEmotionModel(true)
         }
     }, [newEmotion])
 
@@ -63,13 +63,14 @@ const AddNote = () => {
     }
 
     const handleCloseAddEmotion = () => {
-        setNewEmotion('')
-        setOpenAddEmotionModel(!openAddEmotionModel)
+        setNewEmotion('Happy')
+        setOpenAddEmotionModel(false)
     }
 
     const handleAddingNewEmotion = () => {
         createEmotion(addNewEmotionInputField)
-        setOpenAddEmotionModel(!openAddEmotionModel)
+        setOpenAddEmotionModel(false)
+        setNewEmotion('Happy')
     }
 
     const onAddNewEmotionInputField = (newEmotion: ChangeEvent<HTMLInputElement>): void => {
