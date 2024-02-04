@@ -1,9 +1,10 @@
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Grid, GridItem } from '@chakra-ui/react';
 import './App.css';
 import YearProgress from './components/YearProgress';
 import Quote from './components/Quote';
 import Weather from './components/Weather';
 import BookTracker from './components/BookTracker';
+import MealStat from './components/MealStat';
 
 function App() {
   return (
@@ -26,7 +27,10 @@ function App() {
           <Weather />
         </GridItem>
         <GridItem colSpan={4}>
-          <YearProgress />
+          <Flex flexDir='row'>
+            <YearProgress />
+            <MealStat />
+          </Flex>
         </GridItem >
       </Grid>
     </>
