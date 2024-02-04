@@ -64,9 +64,9 @@ const AddNote = () => {
 
     const onAddNewNote = (): void => {
         createNote(createNoteBody)
-        .then(res => {console.log(res)})
-        .catch(err => {if (err) throw err})
-            
+            .then(() => { console.log('Note successfully created') })
+            .catch(err => { if (err) throw err })
+
         onClose()
     }
 
