@@ -14,28 +14,29 @@ import {
     Select
 } from "@chakra-ui/react";
 import React, { ChangeEvent, useEffect, useState } from "react";
-
-const allEmotions: string[] = ['Happy', 'Anxious', 'Sad', 'Add Emotion']
+import getEmotions from "../hooks/internalApiHooks/getEmotions";
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [newEmotion, setNewEmotion] = useState<string>('') // this is going to be added to a bigger object of stage
+    const [newEmotion, setNewEmotion] = useState<string>('')
+    const [allEmotionsArray, setAllEmotionsArray] = useState<string[] | String[]>([])
     const [openAddEmotionModel, setOpenAddEmotionModel] = useState<boolean>(false)
-    const [allEmotionsArray, setAllEmotionsArray] =
-        useState<string[]>(allEmotions)
 
     const initialRef = React.useRef(null)
 
     useEffect(() => {
-        // this is going to send a get all request for the emotions
-        // its going to fetch for all emotions
-        // and it updates everytime we add a new emotion
-
-        //but for now its feeding off 'allEmotions' array
-    }, [allEmotionsArray])
+        getEmotions()
+            .then(res => {
+                const emotionArray: String[] = []
+                res.data.forEach((emotion: { emotion: String; }) => emotionArray.push((emotion.emotion)))
+                // why does this call an infinite loop
+                setAllEmotionsArray(emotionArray)
+            })
+            .catch(err => { if (err) throw err })
+    }, [])
 
     useEffect(() => {
-        if (newEmotion === 'Add Emotion') {
+        if (newEmotion === 'Click to add emotion..') {
             setOpenAddEmotionModel(!openAddEmotionModel)
         }
     }, [newEmotion])
@@ -58,8 +59,6 @@ const AddNote = () => {
 
     const handleAddingNewEmotion = () => {
         console.log('send off post requet to add emotion')
-        allEmotions.unshift(newEmotion)
-        setAllEmotionsArray(allEmotions)
         setOpenAddEmotionModel(!openAddEmotionModel)
     }
 
@@ -97,10 +96,9 @@ const AddNote = () => {
                             <FormLabel>How Do You Feel?</FormLabel>
                             <Select placeholder='Give me and emotion..'
                                 onChange={(target) => onAddEmotion(target)}>
-                                {allEmotions
-                                    .map(emotion =>
-                                        <option key={emotion} value={emotion}>{emotion}</option>
-                                    )}
+                                {allEmotionsArray.map((emo, index) => (
+                                    <option key={index}>{emo}</option>
+                                ))}
                             </Select>
                         </FormControl>
                     </ModalBody>

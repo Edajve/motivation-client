@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const rapidApi = axios.create({
+const internalAPI = axios.create({
     baseURL: "http://localhost:8080",
 }); 
 
-export default rapidApi;
+export default internalAPI;
