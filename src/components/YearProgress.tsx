@@ -42,7 +42,6 @@ function YearProgress() {
     }
 
     return (
-
         <Flex
             id='yearProgressBox'
             w="40rem"
