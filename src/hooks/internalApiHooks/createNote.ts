@@ -9,7 +9,7 @@ export interface Note {
     dateOfNoteSubmission: string;
 }
 
-function getCurrentDateTimeString() {
+export function getCurrentDateTimeString() {
     const now = new Date();
 
     const year = now.getFullYear();
@@ -24,13 +24,15 @@ function getCurrentDateTimeString() {
     return dateTimeString;
 }
 
-export const createNote = (noteObj: Note) => {
-    internalAPI.post('/api/v1/note', {
+export const createNote = (noteObj: Note): Promise<Note> => {
+    return internalAPI.post('/api/v1/create/note', {
         "title": noteObj.title,
         "actualNote": noteObj.actualNote,
-        "emotion": {
-            "emotion": noteObj.emotion
-        },
+        "emotion": noteObj.emotion.emotion.toString(),  // Extract the string property
         "dateOfNoteSubmission": getCurrentDateTimeString()
+    }).then(res => {
+        return res;
+    }).catch(err => {
+        if (err) return new err
     });
 }

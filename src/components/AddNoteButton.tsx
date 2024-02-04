@@ -16,7 +16,7 @@ import {
 import React, { ChangeEvent, useEffect, useState } from "react";
 import getEmotions from "../hooks/internalApiHooks/getEmotions";
 import createEmotion from "../hooks/internalApiHooks/createEmotion";
-import { Note } from "../hooks/internalApiHooks/createNote";
+import { Note, createNote, getCurrentDateTimeString } from "../hooks/internalApiHooks/createNote";
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -33,7 +33,7 @@ const AddNote = () => {
             emotion: {
                 emotion: ""
             },
-            dateOfNoteSubmission: " "
+            dateOfNoteSubmission: getCurrentDateTimeString()
         }
     )
 
@@ -57,13 +57,16 @@ const AddNote = () => {
 
     const moveElementToEndOfTheArray = (array: String[], elementToMove: string): String[] => {
         const index = array.indexOf(elementToMove)
-        array.splice(index, 1) // remove 'index' from array
+        array.splice(index, 1) // remove 'index' element from array
         array.push(elementToMove)
         return array
     }
 
     const onAddNewNote = (): void => {
-        console.log(createNoteBody)
+        createNote(createNoteBody)
+        .then(res => {console.log(res)})
+        .catch(err => {if (err) throw err})
+            
         onClose()
     }
 
@@ -87,7 +90,6 @@ const AddNote = () => {
         setCreateNoteBody(newNote);
     };
 
-    // fix this here
     const onEmotionChange = (target: ChangeEvent<HTMLSelectElement>): void => {
         const emotionToCapture = target.target.value
         setNewEmotion(emotionToCapture)
