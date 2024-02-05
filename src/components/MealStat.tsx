@@ -8,6 +8,7 @@ import {
     StatGroup,
 } from '@chakra-ui/react'
 import { useEffect, useState } from "react";
+import getFoodStats from "../hooks/internalApiHooks/getFoodStats";
 
 interface buttonOptions {
     Good: string,
@@ -17,10 +18,30 @@ interface buttonOptions {
 const MealStat = () => {
     const [hideButtons, setHideButtons] = useState<Boolean>(false)
     const [goodChoice, setFoodChoice] = useState<buttonOptions>()
+    const [kdr, setKdr] = useState<Number>()
 
     useEffect(() => {
-        // get call to the latest food choice, populate the stats with the response
+        getFoodStats()
+            .then(response => {
+                var kdrPercentage = findKDR(response)
+                setKdr(kdrPercentage)
+
+            })
+            .catch(err => { if (err) throw err })
     }, [])
+
+    const findKDR = (response: any): Number => {
+        var badCounter = 0
+        var goodCounter = 0
+
+        for (let i = 0; i < response.length; i++) {
+            if (response[i].dailyStatus.toString() === 'good') goodCounter++
+            else if (response[i].dailyStatus.toString() === 'bad') badCounter++
+        }
+
+        var kdPercentage = goodCounter / badCounter
+        return kdPercentage
+    }
 
     const onClickButton = (target: any): void => {
         // send the 'target' off to an api
@@ -29,6 +50,12 @@ const MealStat = () => {
     const buttonStyles = {
         margin: "0rem 3rem",
         color: 'white'
+    }
+
+    const dynamicColorForKdr = (): string => {
+        if (kdr !== undefined)
+            return +kdr >= 1 ? 'green' : 'red'
+        return 'green'
     }
 
     return (
@@ -56,8 +83,8 @@ const MealStat = () => {
                 <Box>
                     <StatGroup>
                         <Stat>
-                            <StatLabel>Eating K/D for the year</StatLabel>
-                            <StatNumber color='green'>.06</StatNumber>
+                            <StatLabel>Eating K/D for the year (Started Feb 4, 2024)</StatLabel>
+                            <StatNumber color={dynamicColorForKdr()}>{String(kdr)}</StatNumber>
                             <StatHelpText>
                                 <StatArrow type='increase' />
                                 23.36%
