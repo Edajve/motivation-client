@@ -9,18 +9,19 @@ import {
 } from '@chakra-ui/react'
 import { useEffect, useState } from "react";
 import getFoodStats from "../hooks/internalApiHooks/getFoodStats";
-
-interface buttonOptions {
-    Good: string,
-    Bad: string
-}
+import createFoodStat, { createFoodStatPaylod } from "../hooks/internalApiHooks/createFoodStat";
+import dateFormat from "../helpers/dateFormat";
 
 const MealStat = () => {
-    const [hideButtons, setHideButtons] = useState<Boolean>(false)
-    const [goodChoice, setFoodChoice] = useState<buttonOptions>()
     const [kdr, setKdr] = useState<Number>()
+    const [toggle, setToggle] = useState<boolean>(false)
+    const [foodStatPayload, setFoodStatPayload] = useState<createFoodStatPaylod>({
+        dailyStatus: "",
+        dateSubmitted: dateFormat()
+    })
 
     useEffect(() => {
+        console.log('run effect')
         getFoodStats()
             .then(response => {
                 var kdrPercentage = findKDR(response)
@@ -28,7 +29,7 @@ const MealStat = () => {
 
             })
             .catch(err => { if (err) throw err })
-    }, [])
+    }, [toggle])
 
     const findKDR = (response: any): Number => {
         var badCounter = 0
@@ -44,7 +45,13 @@ const MealStat = () => {
     }
 
     const onClickButton = (target: any): void => {
-        // send the 'target' off to an api
+        var payloadValue;
+        if (target.target.id === 'good-btn') payloadValue = 'good'
+        else payloadValue = 'bad'
+        var newPayload = { ...foodStatPayload, dailyStatus: payloadValue }
+        setFoodStatPayload(newPayload)
+        createFoodStat(foodStatPayload)
+        setToggle(!toggle)
     }
 
     const buttonStyles = {
@@ -73,6 +80,7 @@ const MealStat = () => {
             <Flex>
                 <Box>
                     <Button
+                        id="good-btn"
                         onClick={(target) => onClickButton(target)}
                         {...buttonStyles}
                         colorScheme='teal'
@@ -94,6 +102,7 @@ const MealStat = () => {
                 </Box>
                 <Box>
                     <Button
+                        id="bad-btn"
                         onClick={(target) => onClickButton(target)}
                         {...buttonStyles}
                         colorScheme='teal'
