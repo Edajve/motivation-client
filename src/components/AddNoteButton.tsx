@@ -16,7 +16,8 @@ import {
 import React, { ChangeEvent, useEffect, useState } from "react";
 import getEmotions from "../hooks/internalApiHooks/getEmotions";
 import createEmotion from "../hooks/internalApiHooks/createEmotion";
-import { Note, createNote, getCurrentDateTimeString } from "../hooks/internalApiHooks/createNote";
+import { Note, createNote } from "../hooks/internalApiHooks/createNote";
+import getCurrentDateTimeString from '../helpers/dateFormat.ts'
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
