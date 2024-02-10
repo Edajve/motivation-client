@@ -15,18 +15,18 @@ function Weather() {
     const [weather, setWeather] = useState<WeatherUpdate>()
 
     useEffect(() => {
-        getCurrentWeather()
-            .then((res) => {
-                setWeather({
-                    icon: res.current.condition.icon,
-                    description: res.current.condition.text,
-                    location: res.location.name,
-                    windSpeed: res.current.wind_mph,
-                    farenheight: res.current.feelslike_f,
-                    humidity: res.current.humidity
-                })
-            })
-            .catch((err) => { if (err) throw err })
+        // getCurrentWeather()
+        //     .then((res) => {
+        //         setWeather({
+        //             icon: res.current.condition.icon,
+        //             description: res.current.condition.text,
+        //             location: res.location.name,
+        //             windSpeed: res.current.wind_mph,
+        //             farenheight: res.current.feelslike_f,
+        //             humidity: res.current.humidity
+        //         })
+        //     })
+        //     .catch((err) => { if (err) throw err })
     }, [])
 
     const boxStyles = {
