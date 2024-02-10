@@ -12,45 +12,55 @@ import getFoodStats from "../hooks/internalApiHooks/getFoodStats";
 import createFoodStat, { createFoodStatPaylod } from "../hooks/internalApiHooks/createFoodStat";
 import dateFormat from "../helpers/dateFormat";
 
+interface GoodBad {
+    good: string,
+    bad: string
+}
+
 const MealStat = () => {
     const [kdr, setKdr] = useState<Number>()
     const [toggle, setToggle] = useState<boolean>(false)
+    const [goodBad, setGoodBad] = useState<GoodBad>({
+        good: "",
+        bad: ""
+    })
     const [foodStatPayload, setFoodStatPayload] = useState<createFoodStatPaylod>({
         dailyStatus: "",
         dateSubmitted: dateFormat()
     })
 
     useEffect(() => {
-        console.log('run effect')
         getFoodStats()
             .then(response => {
-                var kdrPercentage = findKDR(response)
-                setKdr(kdrPercentage)
-
+                findKDR(response)
+                var kd = parseInt(goodBad.good) / parseInt(goodBad.bad)
+                // setKdr(kd)
             })
             .catch(err => { if (err) throw err })
-    }, [toggle])
+    }, [toggle, foodStatPayload])
 
-    const findKDR = (response: any): Number => {
-        var badCounter = 0
-        var goodCounter = 0
+    const findKDR = (response: any): void => {
+        let badCounter = 0
+        let goodCounter = 0
 
         for (let i = 0; i < response.length; i++) {
-            if (response[i].dailyStatus.toString() === 'good') goodCounter++
-            else if (response[i].dailyStatus.toString() === 'bad') badCounter++
+            if (response[i].dailyStatus.toString() === 'good') goodCounter += 1
+            else if (response[i].dailyStatus.toString() === 'bad') badCounter += 1
         }
+        var x = parseInt(goodBad.good) / parseInt(goodBad.bad)
 
-        var kdPercentage = goodCounter / badCounter
-        return kdPercentage
+        let newGoodBad = { ...goodBad, good: goodCounter.toString(), bad: badCounter.toString() }
+        setKdr(x)
+        setGoodBad(newGoodBad)
     }
 
-    const onClickButton = (target: any): void => {
+    const onClickGoodOrBadButton = (target: any): void => {
         var payloadValue;
         if (target.target.id === 'good-btn') payloadValue = 'good'
         else payloadValue = 'bad'
         var newPayload = { ...foodStatPayload, dailyStatus: payloadValue }
         setFoodStatPayload(newPayload)
-        createFoodStat(foodStatPayload)
+        createFoodStat(newPayload)
         setToggle(!toggle)
     }
 
@@ -63,6 +73,12 @@ const MealStat = () => {
         if (kdr !== undefined)
             return +kdr >= 1 ? 'green' : 'red'
         return 'green'
+    }
+
+    const dynamicIconForKdr = (): string => {
+        if (kdr !== undefined)
+            return +kdr >= 1 ? 'increase' : 'decrease'
+        return 'increase'
     }
 
     return (
@@ -81,7 +97,7 @@ const MealStat = () => {
                 <Box>
                     <Button
                         id="good-btn"
-                        onClick={(target) => onClickButton(target)}
+                        onClick={(target) => onClickGoodOrBadButton(target)}
                         {...buttonStyles}
                         colorScheme='teal'
                         variant='outline'>
@@ -94,8 +110,8 @@ const MealStat = () => {
                             <StatLabel>Eating K/D for the year (Started Feb 4, 2024)</StatLabel>
                             <StatNumber color={dynamicColorForKdr()}>{String(kdr)}</StatNumber>
                             <StatHelpText>
-                                <StatArrow type='increase' />
-                                23.36%
+                                <StatArrow type={dynamicIconForKdr()} />
+                                {goodBad.good}-{goodBad.bad}
                             </StatHelpText>
                         </Stat>
                     </StatGroup>
@@ -103,7 +119,7 @@ const MealStat = () => {
                 <Box>
                     <Button
                         id="bad-btn"
-                        onClick={(target) => onClickButton(target)}
+                        onClick={(target) => onClickGoodOrBadButton(target)}
                         {...buttonStyles}
                         colorScheme='teal'
                         variant='outline'>
