@@ -19,6 +19,7 @@ export interface BookRequestPayload {
     bookOpinion: string;
     specialNotes: string;
     alreadyRead: boolean;
+    isCurrentlyReading: boolean;
 }
 
 const createBook = (book: any) => {
@@ -35,7 +36,8 @@ const createBook = (book: any) => {
         "endReadingDate": "0000-01-01T01:00:00",
         "bookOpinion": "",
         "specialNotes": "",
-        "alreadyRead": false
+        "alreadyRead": false,
+        "isCurrentlyReading": false
     }
 
     return internalAPI

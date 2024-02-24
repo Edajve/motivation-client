@@ -11,6 +11,7 @@ const CurrentlyReadingModel = () => {
         getReadOrUnreadBooks(false)
             .then(res => {
                 const isCurrentlyReadingABook = res.length === 0
+                // TODOS make sure this logic below works
                 if (isCurrentlyReadingABook) {
                     // there is no book that is currently being read at the moment
                     setCurrentlyReadingAnyBook(false)

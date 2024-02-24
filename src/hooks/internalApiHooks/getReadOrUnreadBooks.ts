@@ -20,6 +20,7 @@ export interface BookResponsePayload {
     bookOpinion: string;
     specialNotes: string;
     alreadyRead: boolean;
+    isCurrentlyReading: boolean
 }
 
 function getReadOrUnreadBooks(onlyReadBooks: boolean): Promise<BookResponsePayload[]> {
