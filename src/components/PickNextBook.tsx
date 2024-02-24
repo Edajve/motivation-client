@@ -1,31 +1,93 @@
 import {
     Box,
-    Spacer,
     Text,
-    Divider,
-    Stack,
-    VStack,
     Button,
-    ButtonGroup,
-    Card,
-    CardBody,
-    CardFooter,
-    Heading,
-    Flex
+    Flex,
+    useDisclosure,
+    FormControl,
+    FormLabel,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay
 } from "@chakra-ui/react"
-import EditBookButton from "./EditBookButton"
 import { Image } from '@chakra-ui/react'
-import SubmitBookReviewButton from "./SubmitBookReviewButton"
+import { useState } from "react"
+import React from "react"
+import createBook from "../hooks/internalApiHooks/createBook";
+
+interface newBookForm {
+    title: string;
+    author: string;
+    totalChapters: number;
+    totalPages: number;
+
+}
 
 const PickNextBook = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [newBook, setNewBook] = useState<newBookForm>(
+        {
+            title: "",
+            author: "",
+            totalChapters: 0,
+            totalPages: 0
+        }
+    )
 
     const testTitle = 'Lorem ipsumojoj aodifa afoaufofidu jafldasfjio' // 15 characters for title
     const testDescription = 'Lorem ipsum dolor sit amet fjaid soifj aakajdjfiao aerpro nnlamofn ifoaepaeia iidfjaf ofjiafp isadjf isdhf iasdf nneito dfiaf dfiau' // description 101 characters
+
+    const initialRef = React.useRef(null)
+    const finalRef = React.useRef(null)
+
 
     const previewText = (text: String, maxCharacterLength: number, addEllipsis: boolean): string => {
         var shortenedText: string = text.substring(0, maxCharacterLength)
         if (addEllipsis) shortenedText += '...'
         return shortenedText
+    }
+
+    const onAddBookToQueue = () => {
+        createBook(newBook)
+        .then(res => {
+            return res
+        })
+        .catch(err => {
+            if (err) {
+                throw new err
+            }
+        })
+    }
+
+    const onChangeBookFormInputs = (input: any): void => {
+        let inputText;
+        let fieldToUpdate: any;
+
+        switch (input.target.id) {
+            case 'title-input':
+                fieldToUpdate = 'title'
+                break;
+            case 'author-input':
+                fieldToUpdate = 'author'
+                break;
+            case 'chapters-input':
+                fieldToUpdate = 'totalChapters'
+                break;
+            case 'pages-input':
+                fieldToUpdate = 'totalPages'
+                break;
+            default:
+                return
+        }
+
+        inputText = input.target.value
+        const newBookObject = { ...newBook, [fieldToUpdate]: inputText }
+        setNewBook(newBookObject)
     }
 
     return (
@@ -64,8 +126,68 @@ const PickNextBook = () => {
                         <Image p={1} boxSize='80px' src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
                     </Box>
                 </Flex>
-                <Button>Add Book</Button>
+                <Button onClick={onOpen}>Add a book to pending</Button>
             </div>
+
+            <Modal
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>A Book to Queue</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <FormControl>
+                            <FormLabel>Title</FormLabel>
+                            <Input
+                                id="title-input"
+                                value={newBook.title}
+                                onChange={target => onChangeBookFormInputs(target)}
+                                ref={initialRef}
+                                placeholder='Book Title' />
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel>Author</FormLabel>
+                            <Input
+                                id="author-input"
+                                value={newBook.author}
+                                onChange={target => onChangeBookFormInputs(target)}
+                                placeholder='Author Name' />
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel>Total Chapters</FormLabel>
+                            <Input
+                                id="chapters-input"
+                                value={newBook.totalChapters}
+                                onChange={target => onChangeBookFormInputs(target)}
+                                type="number"
+                                placeholder='Total # of Chapters' />
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel>Total Pages</FormLabel>
+                            <Input
+                                id="pages-input"
+                                value={newBook.totalPages}
+                                onChange={target => onChangeBookFormInputs(target)}
+                                type="number"
+                                placeholder='Total # of Pages' />
+                        </FormControl>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button onClick={() => onAddBookToQueue()} colorScheme='blue' mr={3}>
+                            Save
+                        </Button>
+                        <Button onClick={onClose}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     )
 }

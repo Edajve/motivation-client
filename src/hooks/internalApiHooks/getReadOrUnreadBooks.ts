@@ -1,11 +1,11 @@
 import internalAPI from "../../services/internalApi-client";
 
-interface Author {
+export interface Author {
     id: number;
     authorName: string;
 }
 
-interface BookResponse {
+export interface BookResponsePayload {
     id: number;
     title: string;
     author: Author;
@@ -22,7 +22,7 @@ interface BookResponse {
     alreadyRead: boolean;
 }
 
-function getReadOrUnreadBooks(onlyReadBooks: boolean): Promise<BookResponse[]> {
+function getReadOrUnreadBooks(onlyReadBooks: boolean): Promise<BookResponsePayload[]> {
     return internalAPI
         .get('/api/v1/book/read', { params: { read: String(onlyReadBooks) } })
         .then(res => { return res.data })
