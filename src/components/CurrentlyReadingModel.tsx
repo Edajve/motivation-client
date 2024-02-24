@@ -5,30 +5,24 @@ import PickNextBook from "./PickNextBook";
 import CurrentBook from "./CurrentBook";
 
 const CurrentlyReadingModel = () => {
-    const [anyBooksInprogress, setAnyBooksInProgress] = useState<boolean>()
+    const [currentlyReadingAnyBook, setCurrentlyReadingAnyBook] = useState<boolean>()
 
     useEffect(() => {
         getReadOrUnreadBooks(false)
             .then(res => {
                 const isCurrentlyReadingABook = res.length === 0
                 if (isCurrentlyReadingABook) {
-                    setAnyBooksInProgress(false) // this means that there is no book that is currently being read at the moment
+                    // there is no book that is currently being read at the moment
+                    setCurrentlyReadingAnyBook(false)
                 } else {
-                    setAnyBooksInProgress(true) // there is a book that is currently being read
+                    // there is a book that is currently being read at the moment
+                    setCurrentlyReadingAnyBook(true)
                 }
-
             })
             .catch(err => { if (err) console.log(err) })
-    }, [anyBooksInprogress])
+    }, [currentlyReadingAnyBook])
 
-    return (
-        <>
-            <Box w='80%' pt={2}>
-                {anyBooksInprogress ?
-                    (<CurrentBook />) : (<PickNextBook />)}
-            </Box>
-        </>
-    )
+    return (<><Box w='80%' pt={2}>{currentlyReadingAnyBook ? (<CurrentBook />) : (<PickNextBook />)}</Box></>)
 }
 
 export default CurrentlyReadingModel;

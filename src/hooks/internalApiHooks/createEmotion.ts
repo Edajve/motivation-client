@@ -14,7 +14,6 @@ const createEmotion = (emotion: String) => {
                 return err
             }
         })
-
 }
 
 export default createEmotion
