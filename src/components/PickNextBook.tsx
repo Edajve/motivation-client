@@ -16,9 +16,10 @@ import {
     ModalOverlay
 } from "@chakra-ui/react"
 import { Image } from '@chakra-ui/react'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import React from "react"
 import createBook from "../hooks/internalApiHooks/createBook";
+import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/getReadOrUnreadBooks";
 
 interface newBookForm {
     title: string;
@@ -30,6 +31,7 @@ interface newBookForm {
 
 const PickNextBook = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [allUnreadBooks, setAllUnreadBooks] = useState<BookResponsePayload[]>([])
     const [newBook, setNewBook] = useState<newBookForm>(
         {
             title: "",
@@ -39,6 +41,16 @@ const PickNextBook = () => {
         }
     )
 
+    useEffect(() => {
+        getReadOrUnreadBooks(false)
+            .then(res => {
+                const books: BookResponsePayload[] = res as BookResponsePayload[];
+                setAllUnreadBooks(books)
+
+            })
+            .catch(err => { if (err) console.log(err) })
+    }, [])
+
     const testTitle = 'Lorem ipsumojoj aodifa afoaufofidu jafldasfjio' // 15 characters for title
     const testDescription = 'Lorem ipsum dolor sit amet fjaid soifj aakajdjfiao aerpro nnlamofn ifoaepaeia iidfjaf ofjiafp isadjf isdhf iasdf nneito dfiaf dfiau' // description 101 characters
 
@@ -47,6 +59,8 @@ const PickNextBook = () => {
 
 
     const previewText = (text: String, maxCharacterLength: number, addEllipsis: boolean): string => {
+        if (text == "") return 'No Description...'
+
         var shortenedText: string = text.substring(0, maxCharacterLength)
         if (addEllipsis) shortenedText += '...'
         return shortenedText
@@ -54,14 +68,14 @@ const PickNextBook = () => {
 
     const onAddBookToQueue = () => {
         createBook(newBook)
-        .then(res => {
-            return res
-        })
-        .catch(err => {
-            if (err) {
-                throw new err
-            }
-        })
+            .then(res => {
+                return res
+            })
+            .catch(err => {
+                if (err) {
+                    throw new err
+                }
+            })
     }
 
     const onChangeBookFormInputs = (input: any): void => {
@@ -97,37 +111,40 @@ const PickNextBook = () => {
                 height: '25rem',
                 overflowY: 'scroll'
             }}>
-                <Flex
-                    w='100%'
-                    h='120px'
-                    bg='rgba(249, 255, 255, 0.12)'
-                    borderRadius={4}
-                    mb={3}
-                    flexDirection='row'
-                    justifyContent='space-between'>
-                    <Box
-                        p={1}
-                        w='8rem'>
-                        <Text
-                            pl={1}
-                            pb={1}
-                            fontSize='sm'>
-                            {previewText(testTitle, 15, false)}
-                        </Text>
-                        <Text
-                            pl={2}
-                            pb={2}
-                            fontSize='8px'>
-                            {previewText(testDescription, 102, true)}
-                        </Text>
-                        <Box pl={1} fontSize='xs'>5 star rating</Box>
-                    </Box>
-                    <Box>
-                        <Image p={1} boxSize='80px' src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
-                    </Box>
-                </Flex>
-                <Button onClick={onOpen}>Add a book to pending</Button>
+                {allUnreadBooks.map(book => [
+                    <Flex
+                        key={book.id}
+                        w='100%'
+                        h='120px'
+                        bg='rgba(249, 255, 255, 0.12)'
+                        borderRadius={4}
+                        mb={3}
+                        flexDirection='row'
+                        justifyContent='space-between'>
+                        <Box
+                            p={1}
+                            w='8rem'>
+                            <Text
+                                pl={1}
+                                pb={1}
+                                fontSize='sm'>
+                                {previewText(book.title, 15, false)}
+                            </Text>
+                            <Text
+                                pl={2}
+                                pb={2}
+                                fontSize='8px'>
+                                {previewText(book.description, 102, true)}
+                            </Text>
+                            <Box pl={1} fontSize='xs'>5 star rating</Box>
+                        </Box>
+                        <Box>
+                            <Image p={1} boxSize='80px' src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
+                        </Box>
+                    </Flex>
+                ])}
             </div>
+            <Button onClick={onOpen}>Add a book to pending</Button>
 
             <Modal
                 initialFocusRef={initialRef}
