@@ -11,15 +11,8 @@ const CurrentlyReadingModel = () => {
         getReadOrUnreadBooks(true)
             .then(res => {
                 const isCurrentlyReadingABook = res.length === 1
-                if (isCurrentlyReadingABook) {
-                    //there is a book that is currently being read at the moment
-                    console.log("there is a book that is being read")
-                    setIsCurrentlyReadingABook(true)
-                } else {
-                    // there is no book that is currently being read at the moment
-                    console.log("there is NO book that is being read")
-                    setIsCurrentlyReadingABook(false)
-                }
+                if (isCurrentlyReadingABook) setIsCurrentlyReadingABook(true)
+                else setIsCurrentlyReadingABook(false)
             })
             .catch(err => { if (err) console.log(err) })
     }, [isCurrentlyReadingABook])
