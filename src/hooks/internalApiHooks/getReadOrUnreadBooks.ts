@@ -25,7 +25,7 @@ export interface BookResponsePayload {
 
 function getReadOrUnreadBooks(onlyReadBooks: boolean): Promise<BookResponsePayload[]> {
     return internalAPI
-        .get('/api/v1/book/read', { params: { read: String(onlyReadBooks) } })
+        .get('/api/v1/book/filter', { params: { read: String(onlyReadBooks) } })
         .then(res => { return res.data })
         .catch(err => { throw err });
 }
