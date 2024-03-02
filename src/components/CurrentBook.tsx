@@ -6,7 +6,7 @@ import {
 import EditBookButton from './EditBookButton'
 import SubmitBookReviewButton from './SubmitBookReviewButton'
 import { useEffect, useState } from "react"
-import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/getReadOrUnreadBooks"
+import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/books/getReadOrUnreadBooks"
 import getCurrentDateTimeString from "../helpers/dateFormat"
 
 const CurrentBook = () => {

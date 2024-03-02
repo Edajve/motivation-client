@@ -13,13 +13,25 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay
+    ModalOverlay,
+    ButtonGroup
 } from "@chakra-ui/react"
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,
+} from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { useEffect, useState } from "react"
 import React from "react"
-import createBook from "../hooks/internalApiHooks/createBook";
-import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/getReadOrUnreadBooks";
+import createBook from "../hooks/internalApiHooks/books/createBook";
+import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/books/getReadOrUnreadBooks";
 
 interface newBookForm {
     title: string;
@@ -32,6 +44,7 @@ interface newBookForm {
 const PickNextBook = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [allUnreadBooks, setAllUnreadBooks] = useState<BookResponsePayload[]>([])
+    const [chosenBookId, setChosenBookId] = useState<string | number>()
     const [newBook, setNewBook] = useState<newBookForm>(
         {
             title: "",
@@ -56,6 +69,7 @@ const PickNextBook = () => {
 
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
+    const initialFocusRef = React.useRef()
 
 
     const previewText = (text: String, maxCharacterLength: number, addEllipsis: boolean): string => {
@@ -104,6 +118,10 @@ const PickNextBook = () => {
         setNewBook(newBookObject)
     }
 
+    const startReadingBook = () => {
+        const bookId = chosenBookId
+    }
+
     return (
         <>
             <div style={{
@@ -112,36 +130,73 @@ const PickNextBook = () => {
                 overflowY: 'scroll'
             }}>
                 {allUnreadBooks.map(book => [
-                    <Flex
+                    <Popover
                         key={book.id}
-                        w='100%'
-                        h='120px'
-                        bg='rgba(249, 255, 255, 0.12)'
-                        borderRadius={4}
-                        mb={3}
-                        flexDirection='row'
-                        justifyContent='space-between'>
-                        <Box
-                            p={1}
-                            w='8rem'>
-                            <Text
-                                pl={1}
-                                pb={1}
-                                fontSize='sm'>
-                                {previewText(book.title, 15, false)}
-                            </Text>
-                            <Text
-                                pl={2}
-                                pb={2}
-                                fontSize='8px'>
-                                {previewText(book.description, 102, true)}
-                            </Text>
-                            <Box pl={1} fontSize='xs'>5 star rating</Box>
-                        </Box>
-                        <Box>
-                            <Image p={1} boxSize='80px' src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
-                        </Box>
-                    </Flex>
+                        placement='right'
+                        closeOnBlur={false}>
+                        <PopoverTrigger >
+                            <Flex
+                                w='100%'
+                                h='120px'
+                                bg='rgba(249, 255, 255, 0.12)'
+                                borderRadius={4}
+                                mb={3}
+                                flexDirection='row'
+                                justifyContent='space-between'
+                                cursor='pointer'
+                                onClick={() => setChosenBookId(book.id)}>
+                                <Box
+                                    p={1}
+                                    w='8rem'>
+                                    <Text
+                                        pl={1}
+                                        pb={1}
+                                        fontSize='sm'>
+                                        {previewText(book.title, 15, false)}
+                                    </Text>
+                                    <Text
+                                        pl={2}
+                                        pb={2}
+                                        fontSize='8px'>
+                                        {previewText(book.description, 102, true)}
+                                    </Text>
+                                    <Box pl={1} fontSize='xs'>5 star rating</Box>
+                                </Box>
+                                <Box>
+                                    <Image p={1} boxSize='80px' src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
+                                </Box>
+                            </Flex>
+                        </PopoverTrigger>
+
+                        <PopoverContent color='black' bg='white' borderColor='white'>
+                            <PopoverHeader pt={4} fontWeight='bold' border='0'>
+                                {book.title}
+                            </PopoverHeader>
+                            <PopoverArrow bg='blue.800' />
+                            <PopoverCloseButton />
+                            <PopoverBody>
+                                By: <Text fontWeight='bold'>{book.author.authorName}</Text>
+                            </PopoverBody>
+                            <PopoverBody>
+                                {book.description}
+                            </PopoverBody>
+                            <PopoverBody>
+                                Rating: <Text fontWeight='bold'>{book.rating}</Text> out of <Text fontWeight='bold'>5</Text>
+                            </PopoverBody>
+                            <PopoverFooter
+                                border='0'
+                                display='flex'
+                                alignItems='center'
+                                justifyContent='space-between'
+                                pb={4}>
+                                <ButtonGroup size='sm'>
+                                    {/* find out how to click the 'Click to start reading this book' button and
+                                    we can get the id of the specific book so that we can update that book */}
+                                    <Button onClick={() => startReadingBook()} colorScheme='green'>Click to start reading this book</Button>
+                                </ButtonGroup>
+                            </PopoverFooter>
+                        </PopoverContent>
+                    </Popover>
                 ])}
             </div>
             <Button onClick={onOpen}>Add a book to pending</Button>
@@ -150,8 +205,7 @@ const PickNextBook = () => {
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
                 isOpen={isOpen}
-                onClose={onClose}
-            >
+                onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>A Book to Queue</ModalHeader>
