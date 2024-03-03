@@ -1,12 +1,15 @@
-import { Box, StackDivider, VStack, Text, Flex } from "@chakra-ui/react";
+import { Box, StackDivider, VStack, Text, Flex, Button } from "@chakra-ui/react";
 import DeleteABookButton from "./DeleteABookButton";
 import { useEffect, useState } from "react";
 import getCompletedBooks from "../../hooks/internalApiHooks/books/getCompletedBooks";
 import { BookRequestPayload } from "../../hooks/internalApiHooks/books/createBook";
 import { BookResponsePayload } from "../../hooks/internalApiHooks/books/getReadOrUnreadBooks";
+import deleteBookById from "../../hooks/internalApiHooks/books/deleteABookById";
 
 const AlreadyReadBooks = () => {
     const [completedBooks, setCompletedBooks] = useState<BookRequestPayload[]>()
+    const [bookId, setBookId] = useState<String>()
+    const [deleteState, setDeleteState] = useState<string>('');
 
     useEffect(() => {
         getCompletedBooks()
@@ -15,14 +18,30 @@ const AlreadyReadBooks = () => {
                 setCompletedBooks(books)
             })
             .catch(err => { throw err });
-    }, [])
+    }, [bookId])
+
+
+    useEffect(() => {
+        if (deleteState == "DELETE") {
+            console.log('ready to delete id of :', bookId)
+            // delete using api
+            deleteBookById(bookId)
+                .then(res => { setDeleteState("COMPLETED") })
+                .catch(err => { console.error(err) });
+
+            // set state to completed
+
+        }
+    }, [deleteState])
+
+    const handleDataFromChild = (childData: string) => setDeleteState(childData)
 
     const boxStyles = {
         p: 2,
         h: 'auto',
         overflow: 'auto',
         borderRadius: '6px'
-    };
+    }
 
     const hoverStyles = {
         _hover: {
@@ -51,7 +70,11 @@ const AlreadyReadBooks = () => {
                             <Text mt={1} ml={2} fontSize='11px'>Description: {book.description}</Text>
                         </Box>
                         <Box pt={4} className="deleteIcon" {...cursorPointer}>
-                            <DeleteABookButton />
+                            <Button
+                                onClick={() => setBookId(book?.id)}
+                                backgroundColor='transparent'>
+                                <DeleteABookButton sendDataToParent={handleDataFromChild} />
+                            </Button>
                         </Box>
                     </Flex>
                 ])}

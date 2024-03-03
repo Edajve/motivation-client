@@ -10,24 +10,24 @@ import {
     Button,
     useDisclosure,
 } from '@chakra-ui/react';
+import React from 'react';
 
-const DeleteABookButton = () => {
+type ChildProps = {
+    sendDataToParent: (data: string) => void;
+};
+
+const DeleteABookButton: React.FC<ChildProps> = ({ sendDataToParent }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef<HTMLButtonElement | null>(null); // Corrected the type
 
-    const onDeleteIcon = () => {
-        console.log("send/or get the id of the given element");
-        onOpen();
-    };
-
     const onConfirmDelete = () => {
-        console.log('delete book by id')
+        sendDataToParent('DELETE')
         onClose()
     }
 
     return (
         <>
-            <DeleteIcon onClick={() => onDeleteIcon()} />
+            <DeleteIcon onClick={() => onOpen()} />
             <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
                 <AlertDialogOverlay>
                     <AlertDialogContent>
