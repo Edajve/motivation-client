@@ -3,7 +3,7 @@ import './App.css';
 import YearProgress from './components/YearProgress';
 import Quote from './components/Quote';
 import Weather from './components/Weather';
-import BookTracker from './components/BookTracker';
+import BookTracker from './components/bookComponents/BookTracker';
 import MealStat from './components/MealStat';
 
 function App() {

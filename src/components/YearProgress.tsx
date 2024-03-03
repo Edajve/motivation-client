@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import yearJson from '../data/yearJson.json'
-import AddNote from './AddNoteButton'
+import AddNote from './bookComponents/AddNoteButton'
 
 function YearProgress() {
     const [yearPercentage, setYearPercentage] = useState(String)

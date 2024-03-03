@@ -29,9 +29,9 @@ import {
 import { Image } from '@chakra-ui/react'
 import { useEffect, useState } from "react"
 import React from "react"
-import createBook from "../hooks/internalApiHooks/books/createBook";
-import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/books/getReadOrUnreadBooks";
-import readBookById from "../hooks/internalApiHooks/books/readABookById"
+import createBook from "../../hooks/internalApiHooks/books/createBook";
+import getReadOrUnreadBooks, { BookResponsePayload } from "../../hooks/internalApiHooks/books/getReadOrUnreadBooks";
+import readBookById from "../../hooks/internalApiHooks/books/readABookById"
 
 interface newBookForm {
     title: string;

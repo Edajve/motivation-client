@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
-import getReadOrUnreadBooks from "../hooks/internalApiHooks/books/getReadOrUnreadBooks";
+import getReadOrUnreadBooks from "../../hooks/internalApiHooks/books/getReadOrUnreadBooks";
 import PickNextBook from "./PickNextBook";
 import CurrentBook from "./CurrentBook";
 
