@@ -23,14 +23,9 @@ const AlreadyReadBooks = () => {
 
     useEffect(() => {
         if (deleteState == "DELETE") {
-            console.log('ready to delete id of :', bookId)
-            // delete using api
             deleteBookById(bookId)
                 .then(res => { setDeleteState("COMPLETED") })
                 .catch(err => { console.error(err) });
-
-            // set state to completed
-
         }
     }, [deleteState])
 
