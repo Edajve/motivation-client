@@ -19,7 +19,7 @@ const EditBookButton = () => {
 
     const initialRef = React.useRef(null)
 
-    const onSaveEdit = (): void => {
+    const OnUpdateBookById = (): void => {
         console.log("save book - send put request to spring backend")
         onClose()
     }
@@ -61,7 +61,7 @@ const EditBookButton = () => {
                         </FormControl>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onSaveEdit}>Save</Button>
+                        <Button colorScheme='blue' mr={3} onClick={OnUpdateBookById}>Save</Button>
                         <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                 </ModalContent>
