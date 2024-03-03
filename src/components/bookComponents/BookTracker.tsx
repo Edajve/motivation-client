@@ -18,7 +18,7 @@ const BookTracker = () => {
                 <Tabs >
                     <TabList>
                         <Tab>Reading</Tab>
-                        <Tab>Read</Tab>
+                        <Tab>Already Read</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>

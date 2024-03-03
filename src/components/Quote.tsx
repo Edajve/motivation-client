@@ -29,7 +29,7 @@ function Quote() {
             </Box>
             <Divider />
             <Box>
-                <Text pt='1rem'>{author}'s view on {category}</Text>
+                <Text pt='1rem'>{author}'s view on <Text fontWeight='bold'>{category}</Text></Text>
             </Box>
         </Flex>
     )
