@@ -1,21 +1,21 @@
-import { Box, Divider, Flex, Text } from '@chakra-ui/react'
+import { Box, Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import getQuote from '../hooks/getRandomQuotes';
 
 function Quote() {
-    const [quote, setQuote] = useState<String>()
-    const [author, setAuthor] = useState<String>()
-    const [category, setCategory] = useState<String>()
+    const [quote, setQuote] = useState<string>();
+    const [author, setAuthor] = useState<string>();
+    const [category, setCategory] = useState<string>();
 
     useEffect(() => {
         getQuote()
             .then((res) => {
-                setQuote(res[0].quote)
-                setAuthor(res[0].author)
-                setCategory(res[0].category)
+                setQuote(res[0].quote);
+                setAuthor(res[0].author);
+                setCategory(res[0].category);
             })
-            .catch((error) => { throw error });
-    }, [])
+            .catch((error) => { throw error; });
+    }, []);
 
     return (
         <Flex
@@ -28,11 +28,13 @@ function Quote() {
                 <Text fontStyle='italic' fontSize='2rem' pb='1rem'>"{quote}"</Text>
             </Box>
             <Divider />
-            <Box>
-                <Text pt='1rem'>{author}'s view on <Text fontWeight='bold'>{category}</Text></Text>
+            <Box pt='1rem'>
+                <Text>
+                    {author}'s view on <Box as='span' fontWeight='bold'>{category}</Box>
+                </Text>
             </Box>
         </Flex>
-    )
+    );
 }
 
 export default Quote;

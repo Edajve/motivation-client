@@ -20,7 +20,7 @@ const EditBookButton = () => {
     const initialRef = React.useRef(null)
 
     const onSaveEdit = (): void => {
-        console.log("save book - send post request to spring backend")
+        console.log("save book - send put request to spring backend")
         onClose()
     }
 
