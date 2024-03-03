@@ -25,13 +25,13 @@ import {
     PopoverFooter,
     PopoverArrow,
     PopoverCloseButton,
-    PopoverAnchor,
 } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { useEffect, useState } from "react"
 import React from "react"
 import createBook from "../hooks/internalApiHooks/books/createBook";
 import getReadOrUnreadBooks, { BookResponsePayload } from "../hooks/internalApiHooks/books/getReadOrUnreadBooks";
+import readBookById from "../hooks/internalApiHooks/books/readABookById"
 
 interface newBookForm {
     title: string;
@@ -64,13 +64,8 @@ const PickNextBook = () => {
             .catch(err => { if (err) console.log(err) })
     }, [])
 
-    const testTitle = 'Lorem ipsumojoj aodifa afoaufofidu jafldasfjio' // 15 characters for title
-    const testDescription = 'Lorem ipsum dolor sit amet fjaid soifj aakajdjfiao aerpro nnlamofn ifoaepaeia iidfjaf ofjiafp isadjf isdhf iasdf nneito dfiaf dfiau' // description 101 characters
-
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
-    const initialFocusRef = React.useRef()
-
 
     const previewText = (text: String, maxCharacterLength: number, addEllipsis: boolean): string => {
         if (text == "") return 'No Description...'
@@ -120,6 +115,11 @@ const PickNextBook = () => {
 
     const startReadingBook = () => {
         const bookId = chosenBookId
+        readBookById(bookId)
+            .then(res => { return res.data })
+            .catch(err => { throw err });
+
+        onClose()
     }
 
     return (
@@ -205,7 +205,7 @@ const PickNextBook = () => {
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
                 isOpen={isOpen}
-                onClose={onClose} >
+                onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>A Book to Queue</ModalHeader>
