@@ -14,10 +14,10 @@ import {
     Select
 } from "@chakra-ui/react";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import getEmotions from "../../hooks/internalApiHooks/getEmotions.ts";
-import createEmotion from "../../hooks/internalApiHooks/createEmotion.ts";
-import { Note, createNote } from "../../hooks/internalApiHooks/createNote.ts";
-import getCurrentDateTimeString from '../../helpers/dateFormat.ts'
+import getEmotions from "../hooks/internalApiHooks/getEmotions.ts";
+import createEmotion from "../hooks/internalApiHooks/createEmotion.ts";
+import { Note, createNote } from "../hooks/internalApiHooks/createNote.ts";
+import getCurrentDateTimeString from '../helpers/dateFormat.ts'
 
 const AddNote = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
