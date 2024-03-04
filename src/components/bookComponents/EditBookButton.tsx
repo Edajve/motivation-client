@@ -74,7 +74,7 @@ const EditBookButton = () => {
     const OnUpdateBookById = (): void => {
         let updateForm = editPayloadBody
         editBookUsingUpdateForm(0, updateForm)
-            .then(res => { return console.log('book updated successfully') })
+            .then(_res => { return console.log('book updated successfully') })
             .catch(err => { console.error(err) });
 
         onClose()
