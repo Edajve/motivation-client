@@ -1,4 +1,5 @@
-import getCurrentDateTimeString from "../../helpers/dateFormat";
+
+import { getCurrentDateTimeString } from "../../helpers/dateFormat";
 import internalAPI from "../../services/internalApi-client";
 
 export interface Note {

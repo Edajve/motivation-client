@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import getFoodStats from "../hooks/internalApiHooks/getFoodStats";
 import createFoodStat, { createFoodStatPaylod } from "../hooks/internalApiHooks/createFoodStat";
-import dateFormat from "../helpers/dateFormat";
+import { getCurrentDateTimeString } from "../helpers/dateFormat";
 
 interface GoodBad {
     good: string,
@@ -26,7 +26,7 @@ const MealStat = () => {
     })
     const [foodStatPayload, setFoodStatPayload] = useState<createFoodStatPaylod>({
         dailyStatus: "",
-        dateSubmitted: dateFormat()
+        dateSubmitted: getCurrentDateTimeString()
     })
 
     useEffect(() => {
