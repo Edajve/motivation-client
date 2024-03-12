@@ -1,4 +1,4 @@
-import internalAPI from "../../services/internalApi-client";
+import internalAPI from "../../../services/internalApi-client";
 
 export interface DailyStatus {
     id: number;

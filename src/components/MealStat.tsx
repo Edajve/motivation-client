@@ -8,9 +8,10 @@ import {
     StatGroup,
 } from '@chakra-ui/react'
 import { useEffect, useState } from "react";
-import getFoodStats from "../hooks/internalApiHooks/getFoodStats";
+import getFoodStats from "../hooks/internalApiHooks/food/getFoodStats";
 import createFoodStat, { createFoodStatPaylod } from "../hooks/internalApiHooks/createFoodStat";
 import { getCurrentDateTimeString } from "../helpers/dateFormat";
+import getKD from "../hooks/internalApiHooks/food/getKDR";
 
 interface GoodBad {
     good: string,
@@ -18,8 +19,9 @@ interface GoodBad {
 }
 
 const MealStat = () => {
-    const [kdr, setKdr] = useState<Number>()
+    const [kdr, setKdr] = useState<String>()
     const [toggle, setToggle] = useState<boolean>(false)
+    const [renderFood, setRenderFood] = useState<boolean>(false)
     const [goodBad, setGoodBad] = useState<GoodBad>({
         good: "",
         bad: ""
@@ -30,16 +32,34 @@ const MealStat = () => {
     })
 
     useEffect(() => {
-        getFoodStats()
-            .then(response => {
-                findKDR(response)
-                var kd = parseInt(goodBad.good) / parseInt(goodBad.bad)
-                // setKdr(kd)
-            })
-            .catch(err => { if (err) throw err })
+
+            getFoodStats()
+                .then(response => {
+                    console.log('here also')
+                    var kd = findKDR(response)
+                    var kdRatio = kd[1] / kd[0]
+
+                    let newGoodBad = { ...goodBad, good: kd[1].toString(), bad: kd[0].toString() }
+                    setGoodBad(newGoodBad)
+                    setKdr(kdRatio.toFixed(2).toString())
+                })
+                .catch(err => { if (err) console.error(err) })
+        
     }, [toggle, foodStatPayload])
 
-    const findKDR = (response: any): void => {
+    // useEffect(() => {
+    //     getKD()
+    //         .then(response => {
+    //             // let formattedstring: string = response.toFixed(2)
+    //             // let formattedNumber: number = parseFloat(formattedstring)
+    //             // setKdr(Number.parseInt(formattedNumber))
+    //             console.log('here')
+    //             setKdr(response.toString())
+    //         })
+    //         .catch(err => { if (err) console.error(err) })
+    // }, [])
+
+    const findKDR = (response: any): number[] => {
         let badCounter = 0
         let goodCounter = 0
 
@@ -47,11 +67,10 @@ const MealStat = () => {
             if (response[i].dailyStatus.toString() === 'good') goodCounter += 1
             else if (response[i].dailyStatus.toString() === 'bad') badCounter += 1
         }
-        var x = parseInt(goodBad.good) / parseInt(goodBad.bad)
-
-        let newGoodBad = { ...goodBad, good: goodCounter.toString(), bad: badCounter.toString() }
-        setKdr(x)
-        setGoodBad(newGoodBad)
+        var returningArray = []
+        returningArray.push(badCounter)
+        returningArray.push(goodCounter)
+        return returningArray
     }
 
     const onClickGoodOrBadButton = (target: any): void => {
