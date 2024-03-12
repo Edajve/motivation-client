@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import getFoodStats from "../hooks/internalApiHooks/food/getFoodStats";
 import createFoodStat, { createFoodStatPaylod } from "../hooks/internalApiHooks/createFoodStat";
 import { getCurrentDateTimeString } from "../helpers/dateFormat";
-import getKD from "../hooks/internalApiHooks/food/getKDR";
 
 interface GoodBad {
     good: string,
@@ -21,7 +20,6 @@ interface GoodBad {
 const MealStat = () => {
     const [kdr, setKdr] = useState<String>()
     const [toggle, setToggle] = useState<boolean>(false)
-    const [renderFood, setRenderFood] = useState<boolean>(false)
     const [goodBad, setGoodBad] = useState<GoodBad>({
         good: "",
         bad: ""
