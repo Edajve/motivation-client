@@ -30,10 +30,8 @@ const MealStat = () => {
     })
 
     useEffect(() => {
-
             getFoodStats()
                 .then(response => {
-                    console.log('here also')
                     var kd = findKDR(response)
                     var kdRatio = kd[1] / kd[0]
 

@@ -190,8 +190,6 @@ const PickNextBook = () => {
                                 justifyContent='space-between'
                                 pb={4}>
                                 <ButtonGroup size='sm'>
-                                    {/* find out how to click the 'Click to start reading this book' button and
-                                    we can get the id of the specific book so that we can update that book */}
                                     <Button onClick={() => startReadingBook()} colorScheme='green'>Click to start reading this book</Button>
                                 </ButtonGroup>
                             </PopoverFooter>
